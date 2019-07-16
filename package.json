@@ -1,0 +1,26 @@
+{
+    "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.9.0",
+        "@symfony/webpack-encore": "^0.27.0",
+        "core-js": "^3.1.4",
+        "webpack-notifier": "^1.8.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "bootstrap": "^4.3.1",
+        "ckeditor": "^4.12.1",
+        "font-awesome": "^4.7.0",
+        "highcharts": "^7.1.2",
+        "jquery": "^3.4.1",
+        "jquery-ui": "^1.12.1",
+        "popper.js": "^1.15.0",
+        "webpack-cli": "^3.3.5"
+    }
+}

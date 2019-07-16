@@ -1,0 +1,60 @@
+{{ form_start(invoiceForm, { attr: { class: 'test' } }) }}
+
+    <div class="row">
+        <div class="col-md-6">
+            <legend>Information générales</legend>
+            {{ form_row(invoiceForm.reference) }}
+            {{ form_row(invoiceForm.descr) }}
+            {{ form_row(invoiceForm.notes) }}
+        </div>
+        <div class="col-md-6">
+            <legend>Informations complémentaires</legend>
+            <div class="form-row">
+                <div class="col">
+                    {{ form_row(invoiceForm.sent_at) }}
+                    {% if invoice is defined and invoice.sentAt is not empty %}
+                        <div id="form_due_date">
+
+                            <span class="badge badge-warning">
+                                📅 Date paiement max:&nbsp;{{ invoice.dueDate }} (+{{ invoice.paymentMaxDuration }} jours)
+                            </span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    {{ form_row(invoiceForm.paid_at) }}
+                </div>
+                <div class="col">
+                    {{ form_row(invoiceForm.paymentMaxDuration) }}
+                </div>
+            </div>
+                {{ form_row(invoiceForm.customer) }}
+
+            <div class="form-row">
+                <div class="col">
+                    {{ form_row(invoiceForm.category) }}
+                </div>
+                 <div class="col">
+                     {{ form_row(invoiceForm.paymentMethod) }}
+
+                 </div>
+
+             </div>
+            {{ form_row(invoiceForm.generatePdf) }}
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-3">
+            {{ form_row(invoiceForm.save) }}
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-lg btn-secondary btn-block" href="{{ path('invoice_list') }}">Annuler</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'invoice_notes' );
+    </script>
+
+{{ form_end(invoiceForm) }}

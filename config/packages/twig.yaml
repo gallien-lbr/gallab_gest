@@ -1,0 +1,9 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        app_name: "%app_name%"
+    form_themes:
+        - 'bootstrap_4_layout.html.twig'
+        - 'invoice/_formCustom.html.twig'

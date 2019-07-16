@@ -1,0 +1,17 @@
+{#  , 'action': path('customer_add') #}
+{{ form_start(customerForm, { attr: { class: 'test' } }) }}
+
+<div class="row">
+    <div class="col-md-6">
+        <legend>Informations Requises</legend>
+        {{ form_row(customerForm.name) }}
+        {{ form_row(customerForm.contactName) }}
+        {{ form_row(customerForm.save) }}
+    </div>
+    <div class="col-md-6">
+        <legend>Informations Additionelles</legend>
+        {{ form_rest(customerForm) }}
+    </div>
+</div>
+
+{{ form_end(customerForm) }}

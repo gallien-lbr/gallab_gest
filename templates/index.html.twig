@@ -1,0 +1,69 @@
+{% extends "layout.html.twig" %}
+{% block body %}
+    <h2>Bienvenue&nbsp;{{ app.user.fullname }} 👋 </h2>
+
+
+
+
+    <div class="row mt-5">
+        <div class="card bg-light" style="max-width: 18rem;">
+            <div class="card-header">Information sur la sécurité de votre compte</div>
+            <div class="card-body">
+
+                <p class="card-text">
+                <ul>
+                    <li>Dernière connexion : {{ app.user.lastLogin|date("m/d/Y", "Europe/Paris") }}</li>
+                    <li>Dernière IP : {{ app.user.lastIp }}</li>
+                </ul>
+                </p>
+            </div>
+        </div>
+
+
+        <div class="col-sm-3">
+
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header">Chiffre d'Affaire 2019</div>
+                <div class="card-body">
+
+                    <p class="card-text">
+                        {{ app.user.company.getGrossSales()|price }}€
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">C.A. & Charges</h5>
+
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Année 2019</th>
+                            <th scope="col">Montant</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">C.A. total</th>
+                            <td class="font-weight-bold">{{ app.user.company.getGrossSales()|price }}€</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Charges sociales (5.5%)</th>
+                            <td class="text-info font-weight-bold">{{ (app.user.company.getGrossSales() * 0.055)|price  }}€</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Prélévement Libératoire (2%)</th>
+                            <td class="font-weight-bold">{{ (app.user.company.getGrossSales() * 0.02)|price   }}€</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+{% endblock %}

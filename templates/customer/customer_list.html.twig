@@ -1,0 +1,57 @@
+{% extends "layout.html.twig" %}
+{% block page_title %}Comptes clients{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            {% include('flash_messages.html.twig') %}
+
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Entreprise</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col">Interlocuteur</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Site internet</th>
+                    <th scope="col">Date Création</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for c in customers %}
+                    <tr scope="row">
+                        <td>{{ c.name }}</td>
+                        <td>{{ c.phone }}</td>
+                        <td>{{ c.contactName }}</td>
+                        <td>{{ c.email }}</td>
+                        <td><a target="_blank" href="{{ c.website }}">{{ c.website }}</a></td>
+                        <td>{{ c.createdAt|date('d-m-Y') }}</td>
+                        <td><a href="{{ path('customer_edit',{'id':c.id}) }}" >Editer</a></td>
+                        <td>
+                        {% if c.invoices|length == 0  %}
+                            <a href="{{ path('customer_delete',{'id':c.id}) }}" >Delete</a>
+                        {% else %}
+                            -
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% if customerForm is defined %}
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Editer un compte</h2>
+                        {% include('/customer/_form.html.twig') %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

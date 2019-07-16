@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>{{ app_name }}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+</head>
+<body>
+
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('index') }}">{{ app_name }}</a>
+
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="{{ path('app_logout') }}">Se d&eacute;connecter</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Manager</span>
+                    <a class="d-flex align-items-center text-muted" href="#">
+                        <span data-feather="plus-circle"></span>
+                    </a>
+                </h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+
+                        <a class="nav-link active" href="{{ path('index') }}">
+                            <i class="fas fa-chart-line"></i>&nbsp;
+                            Tableau de bord<span class="sr-only">(current)</span>
+                        </a>
+
+                        <a class="nav-link active" href="{{ path('invoice_list') }}">
+                            <i class="fas fa-file"></i>&nbsp;
+                            Factures<span class="sr-only">(current)</span>
+                        </a>
+
+                        <a class="nav-link active" href="{{ path('customer_list') }}">
+                            <i class="fas fa-user"></i>&nbsp;
+                            Comptes clients<span class="sr-only">(current)</span>
+                        </a>
+
+                        <a class="nav-link active" href="{{ path('user_edit') }}">
+                            <i class="far fa-user"></i>
+                            Mon compte<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">{% block page_title %}Tableau de bord{% endblock %}</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <a href="{{ path('invoice_add') }}" class="btn btn-sm btn-outline-success">Ajouter une facture</a>
+                        <a href="{{ path('customer_add') }}" class="btn btn-sm btn-outline-primary">Ajouter un client</a>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Exporter</button>
+                    </div>
+
+                </div>
+            </div>
+            {% block body %}
+            {% endblock %}
+        </main>
+
+    </div>
+
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+</body>
+
+</html>

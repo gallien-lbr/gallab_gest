@@ -1,0 +1,122 @@
+{# invoice/invoice_pdf.html.twig #}
+<style>
+    {{ include('invoice/invoice_pdf.css.twig') }}
+</style>
+<h1 style="color:darkblue;">Facture - {{ invoice.reference }}</h1>
+
+<table id="invoice_header">
+    <tbody>
+    <tr style="font-weight: bold;">
+        <td></td>
+        <td style="text-align:right;">Client</td>
+    </tr>
+    <tr>
+        <!-- Company -->
+        <td style="text-align:left;;">
+            <br />
+                {{ invoice.company.user.gender|trim }}
+                {{ invoice.company.user.firstname }}
+                {{ invoice.company.user.lastname|upper }}<br /><br />
+                {{ invoice.company.address1 }}
+                {% if invoice.company.address2 is not empty %}
+                    {{ invoice.company.address2 }}
+                {% endif %}
+                <br />
+                {{ invoice.company.postalCode }}
+                {{ invoice.company.city }}<br />
+                <br />
+                E-mail&nbsp;:
+            <a href="mailto:{{ invoice.company.user.email }}">{{  invoice.company.user.email }}</a><br />
+                T&eacute;l&eacute;phone&nbsp;:
+                {{  invoice.company.user.company.nationalPhone }}
+                <br />
+                SIRET :
+                {{  invoice.company.formattedSiret }}
+                <br />
+                Code NAF:
+                {{ invoice.company.codeNaf }}
+
+
+        </td>
+        <!-- Customer -->
+        <td style="text-align:right;">
+            <br />
+            {{ invoice.customer.name }}<br />
+            {{ invoice.customer.address1 }}<br />
+            {% if invoice.customer.address2 is not empty %}
+                {{ invoice.customer.address2 }}
+            {% endif %}
+            {{ invoice.customer.postalCode }}<br />
+            {{ invoice.customer.city }}<br />
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<br />
+<br />
+<br />
+<table border="0.2">
+    <tbody>
+    <tr>
+        <td><strong>Objet de la prestation :&nbsp;</strong>{{ invoice.descr }}</td>
+    </tr>
+    </tbody>
+</table>
+<br />
+<br />
+<br />
+<table border="0.2" >
+    <tbody>
+    <thead >
+    <tr style="font-weight: bold;background-color:lightgray;">
+        <th>D&eacute;signation</th>
+        <th>Qt&eacute;</th>
+        <th>Prix Unitaire (PU HT)</th>
+        <th>Montant HT</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ln in invoice.lines  %}
+        <tr>
+            <td>{{ ln.detail }}</td>
+            <td>{{ ln.qty }}&nbsp;{{ ln.unit.name }}</td>
+            <td>{{ ln.price|price }}€</td>
+            <td>{{ ln.totalPrice|price }}€</td>
+        </tr>
+    {% endfor %}
+
+    <tr>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td style="text-align:right;" colspan="3">SOUS-TOTAL HT</td>
+        <td>{{ invoice.totalPrice|price }}€</td>
+    </tr>
+    <tr>
+        <td style="text-align:right;font-weight:bold;font-style:italic;font-size:80%;" colspan="4">
+            TVA NON APPLICABLE, ARTICLE 293B du Code Général des Impôts
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" style="text-align:right;">TOTAL HT</td>
+        <td>{{ invoice.totalPrice|price }}€</td>
+    </tr>
+    <tr style="font-weight:bold;">
+        <td colspan="2" >Date &eacute;ch&eacute;ance de r&eacute;glement: {{ invoice.dueDate }} </td>
+        <td style="text-align:right;">NET &Agrave; PAYER</td>
+        <td>{{ invoice.totalPrice|price }}€</td>
+    </tr>
+    </tbody>
+</table>
+
+
+{%  if invoice.paymentMethod.name is defined %}
+    <br /><br />
+    <strong>Mode de réglement :</strong>&nbsp;
+    {{  invoice.paymentMethod.name }}
+{% endif %}
+<br />
+{{ invoice.notes|raw }}
+

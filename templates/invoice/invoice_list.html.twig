@@ -1,0 +1,92 @@
+{% extends "layout.html.twig" %}
+{% block page_title %}Factures 💰 {% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+
+           {% include('flash_messages.html.twig') %}
+
+            <table class="table table-striped mt-5">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Emise le</th>
+                    <th scope="col">Payée le</th>
+                    <th scope="col">Réf.</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Catégorie</th>
+                    <th scope="col">Montant (€)</th>
+                    <th scope="col">Méthode paiement</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% set total = 0 %}
+
+                    {% for invoice in invoices %}
+
+                    {% set total = total + invoice.totalPrice   %}
+                    <tr scope="row">
+                            <td>{% if invoice.sentAt is empty  %}
+                                    <span class="badge badge-warning">Pas encore envoyé</span>
+                                {% else %}
+                                    {{ invoice.sentAt|date("d/m/Y") }}
+                                {% endif %}
+                            </td>
+                            <td>{{ invoice.paidAt is empty ?
+                            ('<span class="badge badge-warning">En attente</span>')
+                            :
+
+                            ('<span class="badge badge-success">' ~ invoice.paidAt|date("d/m/Y") ~ '</span>')|raw  }}</td>
+                        <td>{{ invoice.reference }}</td>
+                        <td>{{ invoice.customer is empty ? "N/A" : invoice.customer.name }}</td>
+                        <td>{{ invoice.category is empty ? "N/A" : invoice.category.name }}</td>
+
+
+                        <td>+{{ invoice.totalPrice|price }}</td>
+                        <td>{{ invoice.paymentMethod is empty ? "N/A" : invoice.paymentMethod.name }}</td>
+                        <td><a  class="confirm btn-sm btn-primary" href="{{ path('invoice_edit',{'id':invoice.id}) }}">
+                                <i class="far fa-edit"></i></a>&nbsp;
+                                <a href="{{ path('invoice_lines',{'id':invoice.id}) }}">
+                                    <i class="fas fa-list"></i>
+                                </a>
+                        </td>
+                        <td>
+                            <a class="btn-sm btn-dark" href="{{ path('invoice_delete',{'id':invoice.id}) }}">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                        <td>
+                            {% if invoice.generatePdf %}
+                            <a class="btn-sm btn-danger" href="{{ path('invoice_print',{'id':invoice.id}) }}">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                        <td class="text-center" colspan="10">No invoice to display,
+                            <a href="{{ path('invoice_add')}}">you can start adding invoice here</a>
+                        </td>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr class="table-info">
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>   <th></th>
+                    <th>{{ total|price }}</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+
+
+                </tr>
+                </tfoot>
+            </table>
+            </div>
+        </div>
+{% endblock %}

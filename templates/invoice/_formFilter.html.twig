@@ -1,0 +1,11 @@
+{% form_theme formFilter 'invoice/_formCustom.html.twig' %}
+
+
+{{ form_start(formFilter, { attr: { class: '' } }) }}
+       {{ form_row(formFilter.date_start) }}
+       {{ form_row(formFilter.date_end) }}
+       {{ form_row(formFilter.customer) }}
+       {{ form_row(formFilter.filter) }}
+{{ form_end(formFilter) }}
+
+<a class="btn btn-secondary" href="{{ path('invoice_list') }}">Supprimer filtres</a>

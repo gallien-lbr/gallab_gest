@@ -1,0 +1,71 @@
+{% extends "layout.html.twig" %}
+{% block page_title %}Update invoice {{ invoice.reference }}&nbsp;[{{ invoice.totalPrice|price }}€]{% endblock %}
+{% block body %}
+
+  {{ form_start(form) }}
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Facture {{ invoice.reference }} -
+                     Client :
+                    {% if invoice.customer is null  %}
+                        <span class="badge badge-danger"> non défini</span>
+                    {% else %}
+                        <span class="badge badge-success">{{  invoice.customer.name }}</span>
+                    {% endif %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for invoice_line in form.lines %}
+            <tr>
+            <td><strong>Line # {{ loop.index }}</strong>
+                <span class="float-right">
+               <a href="{{ path('invoice_line_remove',{'id':invoice_line.vars.data.id}) }}" class="btn-sm btn btn-warning">
+                        Supprimer une ligne&nbsp;
+                        <i class="fas fa-trash-alt"></i></a>
+                </span>
+            </td>
+        </tr>
+        <tr class="">
+            <td>
+          {{ form_errors(invoice_line) }}
+          {{ form_row(invoice_line.detail) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(invoice_line.qty) }}
+                </div>
+                <div class="col">
+                    {{ form_row(invoice_line.price) }}
+                </div>
+                <div class="col">
+                    {{ form_row(invoice_line.unit) }}
+                </div>
+                <div class="col">
+                    {{ form_row(invoice_line.totalPrice) }}
+                </div>
+            </div>
+            </td>
+        </tr>
+       {% else %}
+
+      {% endfor %}
+        </tbody>
+    </table>
+
+
+    <ul id="line-fields-list"
+        data-prototype="{{ form_widget(form.lines.vars.prototype)|e }}"
+        data-widget-tags="{{ '<li></li>'|e }}"
+        data-widget-counter="{{ form.children|length }}">
+    </ul>
+    <button type="button"
+            class="btn btn-block btn-secondary add-another-collection-widget"
+            data-list-selector="#line-fields-list">Ajouter une ligne</button>
+
+  {{ form_widget(form.submit) }}
+  {{ form_rest((form)) }}
+  {{ form_end(form) }}
+
+
+{% endblock %}
