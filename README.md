@@ -1,11 +1,9 @@
-# billtracking.io - A bill tracker based on Symfony RAD tools
+# Gallab Gestion - Application Démo Symfony 4 (saisie / suivi factures)
 
-    Log bills, amounts and date
-    List bills
-    Have a few graphs (this year / last year)
-    Store them somewhere
+    Fonctionnalités : 
+	Sauvegarde les factures, montants, et dates sur une BDD MySQL
 
-## install & run project
+## Installer et lancer le projet
 
 ```
 git clone the project
@@ -16,7 +14,7 @@ php bin/console doctrine:fixtures:load
 php bin/console server:run
 ```
 
-## run front-end tooling 
+## Lancer le tooling front-end  
 ```
 encore dev --watch
 ```
